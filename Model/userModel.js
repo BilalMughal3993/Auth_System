@@ -1,23 +1,19 @@
-const {Schema,model}= require("mongoose");
-const jwt = require("jsonwebtoken");
+const { Schema, model } = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 const userSchema = Schema({
-    number:{
+    number: {
         type: String,
-        // ref: 'genreSchema',
         required: true
     }
-},{timeStamps:true})
+}, { timestamps: true });
 
-userSchema.methods.generateJWT = function(){
+userSchema.methods.generateJWT = function () {
     const token = jwt.sign({
-        _id:this._id,
-        number:this.number
-    },process.env.JWT_SECRET_KEY,{expiresIn:"7d"})
+        _id: this._id,
+        number: this.number
+    }, process.env.JWT_SECRET_KEY, { expiresIn: "7d" });
+    return token
 }
 
-module.exports.User = model("User",userSchema);
-
-// const User =  model("User",userSchema)
-
-// module.exports=User;
+module.exports.User = model('User', userSchema);
